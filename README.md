@@ -1,1 +1,1 @@
-Practice Project to implement frontend-backend development using >NET Core mvc.
+Practice Project to implement frontend-backend development using .NET Core mvc.
