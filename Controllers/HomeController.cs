@@ -14,20 +14,25 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
     }
 
     [HttpPost]
-    public IActionResult Add(Person person)
+    public IActionResult Index(LoginRegister model, string button)
     {
-        return View();
+        if (button == "login")
+        {
+            Console.WriteLine(button);
+        }
+        else if (button == "register")
+        {}
+        return View(model);
     }
-
     public IActionResult Privacy()
     {
-        Console.WriteLine(ViewData["greeting2"]);
         return View();
     }
 

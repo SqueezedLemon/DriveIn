@@ -11,6 +11,6 @@ namespace DriveIn.Models.Domain
         public DatabaseContext(DbContextOptions<DatabaseContext> opts) : base(opts)
         {}
 
-        public DbSet<Person>? Person { get; set; }
+        // public DbSet<Person>? Person { get; set; }
     }
 }

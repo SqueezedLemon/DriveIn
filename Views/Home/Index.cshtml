@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DriveIn.Models.Domain.LoginRegister
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,16 +10,18 @@
             <div class="card bg-white" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title text-center">Login</h5>
-                <form>
+                <form asp-controller="Home" asp-action="Index" asp-route-action="login" method="post">
                     <div class="form-group pb-3">
-                        <label for="LoginEmail">Email address</label>
-                        <input type="email" class="form-control" id="LoginEmail" placeholder="Enter email">
+                        <label asp-for="Email">Email address</label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Enter email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group pb-4">
-                        <label for="LoginPassword">Password</label>
-                        <input type="password" class="form-control" id="LoginPassword" placeholder="Password">
+                        <label asp-for="Password">Password</label>
+                        <input aspi-for="Password" type="password" class="form-control" placeholder="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" name="button" value="login" class="btn btn-primary">Login</button>
                 </form>
                 </div>
             </div>
@@ -27,24 +30,28 @@
             <div class="card bg-white" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title text-center">Register</h5>
-                <form>
+                <form asp-controller="Home" asp-action="Index" asp-route-action="register" method="post">
                     <div class="form-group pb-3">
-                        <label for="Name">Name</label>
-                        <input type="text" class="form-control" id="Name" placeholder="Enter name">
+                        <label asp-for="Name">Name</label>
+                        <input asp-for="Name" type="text" class="form-control" placeholder="Enter name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group pb-3">
-                        <label for="RegsiterEmail">Email</label>
-                        <input type="email" class="form-control" id="RegsiterEmail" placeholder="Email">
+                        <label asp-for="Email">Email</label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group pb-3">
-                        <label for="RegisterPassword">Password</label>
-                        <input type="password" class="form-control" id="RegisterPassword" placeholder="Enter Password">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group pb-4">
-                        <label for="RegisterConfirmPasssword">Confirm Password</label>
-                        <input type="password" class="form-control" id="RegisterConfirmPasssword" placeholder="Confirm Password">
+                        <label asp-for="ConfirmPassword">Confirm Password</label>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password">
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>                        
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" name="button" value="register" class="btn btn-primary">Register</button>
                 </form>
                 </div>
             </div>
