@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Net;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using DriveIn.Models;
 
@@ -18,8 +19,15 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult Add(Person person)
+    {
+        return View();
+    }
+
     public IActionResult Privacy()
     {
+        Console.WriteLine(ViewData["greeting2"]);
         return View();
     }
 
