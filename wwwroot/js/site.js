@@ -2,3 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+document.addEventListener('DOMContentLoaded', function() {
+    var toast = new bootstrap.Toast(document.getElementById('liveToast'));
+    toast.show();
+});
