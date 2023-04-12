@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace DriveIn.Controllers
 {
-    [Route("[controller]")]
     public class ProfileController : Controller
     {
         private readonly ILogger<ProfileController> _logger;
@@ -18,7 +17,8 @@ namespace DriveIn.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        [HttpGet("{id}")]
+        public IActionResult Profile(int id)
         {
             return View();
         }

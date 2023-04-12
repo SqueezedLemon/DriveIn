@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net;
+using System.Text;
+using System.Security.Cryptography;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using DriveIn.Models;
@@ -24,16 +26,14 @@ public class HomeController : Controller
         {}
         else if (button == "register")
         {
-            if(!ModelState.IsValid)
-            {
-                TempData["msg"]="Registration Failed!";
-                return RedirectToAction("Index");
-            }
             try
             {
                 user.Email = model.Email;
-                user.Password = model.Password;
                 user.Name = model.Name;
+                byte[] passwordSalt = GeneratePasswordSalt();
+                byte[] passwordHash = HashPassword(model.Password, passwordSalt);
+                user.PasswordSalt = passwordSalt;
+                user.PasswordHash = passwordHash;
                 _ctx.Add(user);
                 _ctx.SaveChanges();
                 TempData["msg"]="User Registered!";
@@ -64,5 +64,22 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+    private static byte[] GeneratePasswordSalt()
+    {
+        byte[] salt = new byte[32];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(salt);
+        }
+        return salt;
+    }
+
+    private static byte[] HashPassword (string password, byte[] salt)
+    {
+        var hmac = new HMACSHA512(salt);
+        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return hash;
     }
 }
