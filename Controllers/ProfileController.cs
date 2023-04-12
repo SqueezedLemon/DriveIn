@@ -17,8 +17,8 @@ namespace DriveIn.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Profile(int id)
+        [HttpGet]
+        public IActionResult Profile()
         {
             return View();
         }
