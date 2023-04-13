@@ -20,3 +20,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.custom-p-10 {
+  padding: 6.25rem !important;
+}

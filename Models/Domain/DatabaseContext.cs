@@ -11,5 +11,6 @@ namespace DriveIn.Models.Domain
         {}
 
          public DbSet<User>? User { get; set; }
+         public DbSet<Profile>? Profile { get; set; }
     }
 }

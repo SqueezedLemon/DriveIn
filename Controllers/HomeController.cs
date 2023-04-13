@@ -21,7 +21,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Index(LoginRegister model, string button, User user)
+    public IActionResult Index(LoginRegister model, string button, User user, Profile profile)
     {
         if (button == "login")
         {
@@ -30,7 +30,8 @@ public class HomeController : Controller
                 var getUser = _ctx.User.FirstOrDefault(u => u.Email == model.Email);
                 if (getUser != null && VerifyPassword(model.Password, getUser.PasswordHash))
                 {
-                    return RedirectToAction("Profile", "Profile");
+                    // HttpContext.Session.SetInt32("authorizedId", getUser.Id);
+                    return RedirectToAction("Profile", "Profile", new { id = getUser.Id });
                 }
                 TempData["msg"] = "Login Failed!";
                 return RedirectToAction("Index");
@@ -49,10 +50,12 @@ public class HomeController : Controller
                 if (!EmailExists(model.Email))
                 {
                     user.Email = model.Email;
-                    user.Name = model.Name;
                     string passwordHash = BCrypt.Net.BCrypt.HashPassword(model.Password);
                     user.PasswordHash = passwordHash;
+                    profile.Name = model.Name;
+                    profile.User = user;
                     _ctx.Add(user);
+                    _ctx.Add(profile);
                     _ctx.SaveChanges();
                     TempData["msg"]="User Registered!";
                     return RedirectToAction("Index");

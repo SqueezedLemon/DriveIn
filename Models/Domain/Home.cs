@@ -34,8 +34,5 @@ namespace DriveIn.Models.Domain
 
         [Required]
         public string PasswordHash { get; set; }
-
-        [StringLength(50)]
-        public string Name { get; set; }
     }
 }

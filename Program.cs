@@ -1,6 +1,7 @@
 global using Microsoft.EntityFrameworkCore;
 global using DriveIn.Models.Domain;
 global using System.ComponentModel.DataAnnotations;
+global using Microsoft.AspNetCore.Http;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
