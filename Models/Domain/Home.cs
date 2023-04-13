@@ -32,8 +32,8 @@ namespace DriveIn.Models.Domain
         [EmailAddress]
         public string Email { get; set; }
 
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
+        [Required]
+        public string PasswordHash { get; set; }
 
         [StringLength(50)]
         public string Name { get; set; }

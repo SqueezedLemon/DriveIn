@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using DriveIn.Models;
+using BCrypt.Net;
 
 namespace DriveIn.Controllers;
 
@@ -23,20 +24,40 @@ public class HomeController : Controller
     public IActionResult Index(LoginRegister model, string button, User user)
     {
         if (button == "login")
-        {}
+        {
+            try
+            {
+                var getUser = _ctx.User.FirstOrDefault(u => u.Email == model.Email);
+                if (getUser != null && VerifyPassword(model.Password, getUser.PasswordHash))
+                {
+                    return RedirectToAction("Profile", "Profile");
+                }
+                TempData["msg"] = "Login Failed!";
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                TempData["msg"] = "Login Failed!";
+                return RedirectToAction("Index");
+            }
+        }
         else if (button == "register")
         {
             try
             {
-                user.Email = model.Email;
-                user.Name = model.Name;
-                byte[] passwordSalt = GeneratePasswordSalt();
-                byte[] passwordHash = HashPassword(model.Password, passwordSalt);
-                user.PasswordSalt = passwordSalt;
-                user.PasswordHash = passwordHash;
-                _ctx.Add(user);
-                _ctx.SaveChanges();
-                TempData["msg"]="User Registered!";
+                if (!EmailExists(model.Email))
+                {
+                    user.Email = model.Email;
+                    user.Name = model.Name;
+                    string passwordHash = BCrypt.Net.BCrypt.HashPassword(model.Password);
+                    user.PasswordHash = passwordHash;
+                    _ctx.Add(user);
+                    _ctx.SaveChanges();
+                    TempData["msg"]="User Registered!";
+                    return RedirectToAction("Index");
+                }
+                TempData["msg"]="Email Already Exists!";
                 return RedirectToAction("Index");
             }
             catch (System.Exception)
@@ -66,20 +87,13 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    private static byte[] GeneratePasswordSalt()
+    private bool EmailExists(string email)
     {
-        byte[] salt = new byte[32];
-        using (var rng = RandomNumberGenerator.Create())
-        {
-            rng.GetBytes(salt);
-        }
-        return salt;
+        var user = _ctx.User.FirstOrDefault(u => u.Email == email);
+        return user != null;
     }
-
-    private static byte[] HashPassword (string password, byte[] salt)
+    private static bool VerifyPassword(string password, string hash)
     {
-        var hmac = new HMACSHA512(salt);
-        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-        return hash;
+        return BCrypt.Net.BCrypt.Verify(password, hash);
     }
 }
