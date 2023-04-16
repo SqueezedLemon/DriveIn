@@ -70,8 +70,8 @@
                 <div class="card bg-white text-dark" style="width: 23rem;">
                     <div class="card-body">
                         <h5 class="card-title"><a class="text-dark" href=""><i class="bi bi-arrow-left-circle-fill"></i></a><span class="ps-10">Edit</span></h5>
-                        <form asp-controller="Profile" asp-action="Profile" method="PUT">
-                            <input type="hidden" asp-for="Id" />
+                        <form asp-controller="Profile" asp-action="Profile" method="post">
+                            <input type="hidden" asp-for="Id"/>
                             <div class="form-group pb-3">
                                 <label asp-for="Name">Name</label>
                                 <input asp-for="Name" type="text" class="form-control" placeholder=@Model.Name>

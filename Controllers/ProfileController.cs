@@ -27,22 +27,23 @@ namespace DriveIn.Controllers
             return View(getProfile);
         }
 
-        [HttpPut]
-        public IActionResult Profile(Profile profile)
+        [HttpPost("{id}")]
+        public IActionResult Profile(int id, Profile profile)
 
         {
-                var getProfile = _ctx.Profile.FirstOrDefault(p => p.Id == profile.Id);
-                if (getProfile != null)
-                {
-                    getProfile.Name = profile.Name;
-                    getProfile.Address = profile.Address;
-                    getProfile.Phone = profile.Phone;
-                    getProfile.LicenceNumber = profile.LicenceNumber;
-                    getProfile.Issue = profile.Issue;
-                    _ctx.SaveChanges();
-                    return RedirectToAction("Profile", new { id = profile.UserId });
-                }
-                return RedirectToAction("Index","Home");
+            var getProfile = _ctx.Profile.FirstOrDefault(p => p.UserId == id);
+            Console.WriteLine(getProfile != null);
+            if (getProfile != null)
+            {
+                getProfile.Name = profile.Name;
+                getProfile.Address = profile.Address;
+                getProfile.Phone = profile.Phone;
+                getProfile.LicenceNumber = profile.LicenceNumber;
+                getProfile.Issue = profile.Issue;
+                _ctx.SaveChanges();
+                return RedirectToAction("Profile", new { id });
+            }
+            return RedirectToAction("Index","Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -10,7 +10,7 @@
             <div class="card bg-white" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title text-center">Login</h5>
-                <form asp-controller="Home" asp-action="Index" asp-route-action="login" method="post">
+                <form asp-controller="Home" asp-action="Index" method="post">
                     <div class="form-group pb-3">
                         <label asp-for="Email">Email address</label>
                         <input asp-for="Email" type="email" class="form-control" placeholder="Enter email">
@@ -30,7 +30,7 @@
             <div class="card bg-white" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title text-center">Register</h5>
-                <form asp-controller="Home" asp-action="Index" asp-route-action="register" method="post">
+                <form asp-controller="Home" asp-action="Index" method="post">
                     <div class="form-group pb-3">
                         <label asp-for="Name">Name</label>
                         <input asp-for="Name" type="text" class="form-control" placeholder="Enter name">
